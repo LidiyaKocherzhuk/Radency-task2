@@ -1,9 +1,13 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 import {INote} from '../../interfaces';
 
 interface IState {
     notes: INote[],
+    note: INote | null,
+    updateNote: INote | null,
+    categories: string[],
+
 }
 
 const initialState: IState = {
@@ -66,15 +70,46 @@ const initialState: IState = {
             "dates": "Mon Jul 31 2023"
         }
     ],
+    note: null,
+    updateNote: null,
+    categories: [
+        "Task",
+        "Random Thought",
+        "Idea",
+        "Quote",
+    ]
 };
 
 const noteSlice = createSlice({
     name: 'noteSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setNote: (state, action: PayloadAction<INote>) => {
+            state.note = action.payload;
+        },
+        setUpdateNote: (state, action: PayloadAction<INote | null>) => {
+            state.updateNote = action.payload;
+        },
+        createNote: (state, action: PayloadAction<INote>) => {
+            state.notes.push(action.payload);
+        },
+        update: (state, action: PayloadAction<INote>) => {
+            state.notes = state.notes.map(note => {
+                if (note.id === action.payload.id) {
+                    return action.payload;
+                }
+                return note;
+            });
+            state.updateNote = null;
+        },
+        deleteNote: (state, action: PayloadAction<{ id: string }>) => {
+            state.notes = state.notes.filter(note => note.id !== action.payload.id);
+        }
+    },
 });
 
 const {reducer: noteReducer} = noteSlice;
+export const {setNote, setUpdateNote, createNote, update, deleteNote} = noteSlice.actions;
 
 export {
     noteReducer,
