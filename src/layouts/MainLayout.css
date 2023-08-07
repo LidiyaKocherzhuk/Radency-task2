@@ -1,0 +1,13 @@
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    column-gap: 50px;
+    margin: 20px 0 10px;
+}
+
+.header a {
+    width: 10%;
+    text-decoration: none;
+    font-size: 25px;
+}

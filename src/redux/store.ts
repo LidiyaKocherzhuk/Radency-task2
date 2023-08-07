@@ -1,9 +1,13 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 
 import {noteReducer} from "./slices/note.slice";
+import {archiveReducer} from "./slices/archive.slice";
+import {summaryReducer} from "./slices/summary.slice";
 
 const rootReducer = combineReducers({
     noteReducer,
+    archiveReducer,
+    summaryReducer,
 });
 
 const setupStore = () => configureStore({
